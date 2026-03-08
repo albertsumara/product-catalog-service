@@ -23,13 +23,13 @@ Represents a product manufacturer. Each producer can have multiple products.
   "id": 1,
   "name": "TechCorp"
 }
-
+```
 
 ---
 
 ### **Product**
 
-```markdown id="product-model"
+```markdown id="product-model"```
 ### Product
 Represents a product linked to a producer.  
 
@@ -49,13 +49,13 @@ Represents a product linked to a producer.
   "RAM": "16GB",
   "Color": "Silver"
 }
-
+```
 
 ---
 
 ### **Attribute**
 
-```markdown id="attribute-model"
+```markdown id="attribute-model"```
 ### Attribute
 Represents a key-value attribute for a product.  
 
@@ -70,7 +70,7 @@ Represents a key-value attribute for a product.
   "name": "RAM",
   "value": "16GB"
 }
-
+```
 ### Producers Endpoints (`/api/producer`)  
 - **POST /api/producer**  
   Create a new producer with its name.  
