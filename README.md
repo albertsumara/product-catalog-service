@@ -26,10 +26,6 @@ Represents a product manufacturer. Each producer can have multiple products.
 ```
 
 ---
-
-### **Product**
-
-```markdown id="product-model"```
 ### Product
 Represents a product linked to a producer.  
 
@@ -53,9 +49,6 @@ Represents a product linked to a producer.
 
 ---
 
-### **Attribute**
-
-```markdown id="attribute-model"```
 ### Attribute
 Represents a key-value attribute for a product.  
 
