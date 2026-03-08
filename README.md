@@ -7,6 +7,70 @@ This is a RESTful service for managing products and producers. It supports creat
 
 ## Features
 
+## Data Models
+
+### Producer
+Represents a product manufacturer. Each producer can have multiple products.  
+
+**Fields:**  
+- `id` (Long) – unique identifier  
+- `name` (String) – producer name  
+- `productList` (List<Product>) – list of products  
+
+**Example JSON:**  
+```json
+{
+  "id": 1,
+  "name": "TechCorp"
+}
+
+
+---
+
+### **Product**
+
+```markdown id="product-model"
+### Product
+Represents a product linked to a producer.  
+
+**Fields:**  
+- `id` (Long) – unique product ID  
+- `producerId` (Long) – ID of the producer  
+- `name` (String) – product name  
+- `price` (double) – product price  
+- `attributes` (List<Attribute>) – product attributes  
+
+**Example JSON:**  
+```json
+{
+  "id": 101,
+  "name": "Laptop X",
+  "price": 2999.99,
+  "RAM": "16GB",
+  "Color": "Silver"
+}
+
+
+---
+
+### **Attribute**
+
+```markdown id="attribute-model"
+### Attribute
+Represents a key-value attribute for a product.  
+
+**Fields:**  
+- `id` (Long) – optional identifier  
+- `name` (String) – attribute name  
+- `value` (String) – attribute value  
+
+**Example JSON:**  
+```json
+{
+  "name": "RAM",
+  "value": "16GB"
+}
+
 ### Producers Endpoints (`/api/producer`)  
 - **POST /api/producer**  
   Create a new producer with its name.  
@@ -50,3 +114,16 @@ This is a RESTful service for managing products and producers. It supports creat
 
 ---
 
+### Sample Data Initialization
+The application includes a built-in data initializer that automatically populates the database with example producers, products, and their attributes on startup.  
+This allows you to immediately test the API endpoints without manually creating any data.
+
+## Requirements
+- Java 25 (OpenJDK Temurin, LTS 2025)
+- Maven 4+ or Gradle 8+
+- Optional: IntelliJ IDEA or Eclipse for development
+
+## Running the Application
+1. Build the project:
+   ```bash
+   mvn clean install
