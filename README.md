@@ -98,7 +98,7 @@ Represents a key-value attribute for a product.
   "GPU": "NVIDIA RTX 4070",
   "Screen Size": "16 inch",
   "Color": "Space Gray"
-}  
+  }  
 
 - **GET /api/product**  
   Retrieve all products with their attributes.  
@@ -111,7 +111,7 @@ Represents a key-value attribute for a product.
   ```json
   {
   "name": "Laptop X UltraPro",
-  "RAM": "16GB",
+  "RAM": "16GB"
   }  
 
 - **DELETE /api/product/{productId}**  
