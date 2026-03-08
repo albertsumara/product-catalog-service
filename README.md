@@ -89,15 +89,15 @@ Represents a key-value attribute for a product.
   Create a new product with attributes, associating it with a producer.
   ```json
   {
-  "producerId": 1,
-  "name": "Laptop X Pro",
-  "price": 4599.99,
-  "RAM": "32GB",
-  "Storage": "1TB SSD",
-  "CPU": "Intel i9-13900H",
-  "GPU": "NVIDIA RTX 4070",
-  "Screen Size": "16 inch",
-  "Color": "Space Gray"
+    "producerId": 1,
+    "name": "Laptop X Pro",
+    "price": 4599.99,
+    "RAM": "32GB",
+    "Storage": "1TB SSD",
+    "CPU": "Intel i9-13900H",
+    "GPU": "NVIDIA RTX 4070",
+    "Screen Size": "16 inch",
+    "Color": "Space Gray"
   }  
 
 - **GET /api/product**  
@@ -110,8 +110,8 @@ Represents a key-value attribute for a product.
   Modify attributes or fields of an existing product.
   ```json
   {
-  "name": "Laptop X UltraPro",
-  "RAM": "16GB"
+    "name": "Laptop X UltraPro",
+    "RAM": "16GB"
   }  
 
 - **DELETE /api/product/{productId}**  
