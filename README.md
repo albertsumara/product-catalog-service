@@ -119,7 +119,7 @@ This allows you to immediately test the API endpoints without manually creating 
 ## Running the Application
 1. Clone the repository
    ```bash
-   git clone https://github.com/TwojUsername/pcms-catalogservice.git
+   git clone https://github.com/albertsumara/product-catalog-service
    cd pcms-catalogservice
 
 2. Build the project
