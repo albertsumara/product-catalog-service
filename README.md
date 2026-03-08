@@ -66,7 +66,12 @@ Represents a key-value attribute for a product.
 ```
 ### Producers Endpoints (`/api/producer`)  
 - **POST /api/producer**  
-  Create a new producer with its name.  
+  Create a new producer with its name.
+  ```json
+  {
+    "name": "SONY"
+  }
+  ```  
 
 - **GET /api/producer**  
   Retrieve all producers along with their products and attributes.  
@@ -81,7 +86,19 @@ Represents a key-value attribute for a product.
 
 ### Products Endpoints (`/api/product`)  
 - **POST /api/product**  
-  Create a new product with attributes, associating it with a producer.  
+  Create a new product with attributes, associating it with a producer.
+  ```json
+  {
+  "producerId": 1,
+  "name": "Laptop X Pro",
+  "price": 4599.99,
+  "RAM": "32GB",
+  "Storage": "1TB SSD",
+  "CPU": "Intel i9-13900H",
+  "GPU": "NVIDIA RTX 4070",
+  "Screen Size": "16 inch",
+  "Color": "Space Gray"
+}  
 
 - **GET /api/product**  
   Retrieve all products with their attributes.  
@@ -90,7 +107,12 @@ Represents a key-value attribute for a product.
   Retrieve a single product by its ID with attributes.  
 
 - **PATCH /api/product/{productId}**  
-  Modify attributes or fields of an existing product.  
+  Modify attributes or fields of an existing product.
+  ```json
+  {
+  "name": "Laptop X UltraPro",
+  "RAM": "16GB",
+  }  
 
 - **DELETE /api/product/{productId}**  
   Delete a product by its ID.  
