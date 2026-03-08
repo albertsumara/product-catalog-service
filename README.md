@@ -9,7 +9,7 @@ This is a RESTful service for managing products and producers. It supports creat
 
 ### Producers Endpoints (`/api/producer`)  
 - **POST /api/producer**  
-  Create a new producer with specified attributes.  
+  Create a new producer with its name.  
 
 - **GET /api/producer**  
   Retrieve all producers along with their products and attributes.  
@@ -41,7 +41,7 @@ This is a RESTful service for managing products and producers. It supports creat
 ---
 
 ## Technologies Used  
-- Jav a25
+- Java 25
 - Spring Boot 3.5.11
 - Spring JDBC Template  
 - H2 Database
