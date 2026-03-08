@@ -117,6 +117,14 @@ This allows you to immediately test the API endpoints without manually creating 
 - Optional: IntelliJ IDEA or Eclipse for development
 
 ## Running the Application
-1. Build the project:
+1. Clone the repository
+   ```bash
+   git clone https://github.com/TwojUsername/pcms-catalogservice.git
+   cd pcms-catalogservice
+
+2. Build the project
    ```bash
    mvn clean install
+3. Run the application
+   ```bash
+   mvn spring-boot:run
