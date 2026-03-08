@@ -1,7 +1,5 @@
 package io.git.albertsumara.pcms.catalogservice.model;
 
-import java.util.UUID;
-
 public class Attribute {
 
     private Long id;

@@ -7,6 +7,17 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <changeSet id="1" author="albertsumara">
+        <createTable tableName="producer">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="albertsumara">
         <createTable tableName="product">
             <column name="id" type="BIGSERIAL">
                 <constraints primaryKey="true" nullable="false"/>
@@ -17,10 +28,22 @@
             <column name="price" type="DOUBLE PRECISION">
                 <constraints nullable="false"/>
             </column>
+            <column name="producer_id" type="BIGINT NOT NULL">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="product"
+                baseColumnNames="producer_id"
+                constraintName="fk_attribute_producer"
+                referencedTableName="producer"
+                referencedColumnNames="id"
+                onDelete="CASCADE"/>
+
     </changeSet>
 
-    <changeSet id="2" author="albertsumara">
+    <changeSet id="3" author="albertsumara">
         <createTable tableName="attribute">
             <column name="id" type="BIGSERIAL">
                 <constraints primaryKey="true" nullable="false"/>
@@ -31,7 +54,7 @@
             <column name="value" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="product_id" type="BIGSERIAL">
+            <column name="product_id" type="BIGINT NOT NULL">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -43,17 +66,6 @@
                 referencedTableName="product"
                 referencedColumnNames="id"
                 onDelete="CASCADE"/>
-    </changeSet>
-
-    <changeSet id="3" author="albertsumara">
-        <createTable tableName="producer">
-            <column name="id" type="BIGSERIAL">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="name" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
     </changeSet>
 
 </databaseChangeLog>

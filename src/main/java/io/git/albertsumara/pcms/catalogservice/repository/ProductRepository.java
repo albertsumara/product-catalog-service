@@ -32,6 +32,7 @@ public class ProductRepository {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("name", product.getName());
         parameters.put("price", product.getPrice());
+        parameters.put("producer_id", product.getProducerId());
 
         Number generatedId = productInsert.executeAndReturnKey(parameters);
         return generatedId.longValue();
@@ -44,10 +45,11 @@ public class ProductRepository {
     }
 
     public Optional<Product> findById(long productId) {
-        String sql = "SELECT id, name, price FROM product WHERE id = ?";
+        String sql = "SELECT id, producerId, name, price FROM product WHERE id = ?";
         try {
             Product p = jdbcTemplate.queryForObject(sql, new Object[]{productId}, (rs, rowNum) -> {
-                Product product = new Product(rs.getString("name"), rs.getDouble("price"));
+                Product product = new Product(rs.getLong("producerId"), rs.getString("name"),
+                        rs.getDouble("price"));
                 product.setId(rs.getLong("id"));
                 product.setAttributes(attributeRepository.findByProductId(productId));
                 return product;
@@ -59,12 +61,13 @@ public class ProductRepository {
     }
 
     public Optional<Product> findByIdAndDelete(long productId) {
-        String selectSql = "SELECT id, name, price FROM product WHERE id = ?";
+        String selectSql = "SELECT id, producer_id, name, price FROM product WHERE id = ?";
         String deleteSql = "DELETE FROM product WHERE id = ?";
 
         try {
             Product product = jdbcTemplate.queryForObject(selectSql, new Object[]{productId}, (rs, rowNum) -> {
-                Product p = new Product(rs.getString("name"), rs.getDouble("price"));
+                Product p = new Product(rs.getLong("producer_id"), rs.getString("name"),
+                        rs.getDouble("price"));
                 p.setId(rs.getLong("id"));
                 p.setAttributes(attributeRepository.findByProductId(productId));
                 return p;
@@ -77,12 +80,30 @@ public class ProductRepository {
     }
 
     public List<Product> getAllProducts() {
-        String sql = "SELECT id, name, price FROM product";
+        String sql = "SELECT id, producer_id, name, price FROM product";
 
         return jdbcTemplate.query(
                 sql,
                 (rs, rowNum) -> {
-                    Product p = new Product(rs.getString("name"), rs.getDouble("price"));
+                    Product p = new Product(rs.getLong("producer_id"), rs.getString("name"),
+                            rs.getDouble("price"));
+                    p.setId(rs.getLong("id"));
+                    p.setAttributes(attributeRepository.findByProductId(rs.getLong("id")));
+                    return p;
+                });
+    }
+
+    public List<Product> getAllProductsByProducerId(long producerId) {
+        String sql = "SELECT id, producer_id, name, price FROM product WHERE producer_id = ?";
+
+        return jdbcTemplate.query(
+                sql, new Object[]{producerId},
+                (rs, rowNum) -> {
+                    Product p = new Product(
+                            rs.getLong("producer_id"),
+                            rs.getString("name"),
+                            rs.getDouble("price")
+                    );
                     p.setId(rs.getLong("id"));
                     p.setAttributes(attributeRepository.findByProductId(rs.getLong("id")));
                     return p;
@@ -120,7 +141,6 @@ public class ProductRepository {
                 attributeRepository.upsert(productId, key, value);
             }
         }
-
         return findById(productId).get();
     }
 

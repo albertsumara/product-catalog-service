@@ -14,16 +14,16 @@ public class Producer {
     private String name;
     private List<Product> productList = new ArrayList<>();
 
-//    public Producer(List<Product> productList, String name) {
-//        this.productList = productList;
-//        this.name = name;
-//    }
+    public Producer(List<Product> productList, String name) {
+        this.productList = productList;
+        this.name = name;
+    }
 
     public Producer(String name) {
         this.name = name;
     }
 
-    public Producer(String name, Long id) {
+    public Producer(Long id, String name) {
         this.name = name;
         this.id = id;
     }

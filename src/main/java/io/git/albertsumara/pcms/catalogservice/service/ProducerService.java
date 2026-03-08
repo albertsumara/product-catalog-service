@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -27,8 +28,8 @@ public class ProducerService {
             throw new IllegalArgumentException("the producer's attribute set does not contain a mandatory key name.");
         }
 
-        return new Producer(attributes.get("name"),
-                producerRepository.saveProducer(new Producer(attributes.get("name"))));
+        return new Producer(producerRepository.saveProducer(new Producer(attributes.get("name"))),
+                attributes.get("name"));
 
 
     }
@@ -40,6 +41,21 @@ public class ProducerService {
                     "Producer id: " + producerId + " does not exist.");
         }
         return result.get();
+    }
+
+    public List<Producer> getAllProducers() {
+
+        return producerRepository.getAllProducers();
+
+    }
+
+    public List<Producer> getProducer(long producerId) {
+        Producer producer = producerRepository.findById(producerId)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Producer id: " + producerId + " does not exist."
+                ));
+        return List.of(producer);
     }
 
 

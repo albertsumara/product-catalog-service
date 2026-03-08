@@ -28,8 +28,8 @@ public class ProductController {
         }
     }
 
-    @PatchMapping("/{product_id}")
-    public ResponseEntity<?> modifyProduct(@PathVariable("product_id") long productId,
+    @PatchMapping("/{productId}")
+    public ResponseEntity<?> modifyProduct(@PathVariable("productId") long productId,
                                            @RequestBody Map<String, String> changes){
         try{
             Product product = productService.modifyProduct(productId, changes);
@@ -40,8 +40,8 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/{product_id}")
-    public ResponseEntity<?> getProduct(@PathVariable("product_id") long productId){
+    @GetMapping("/{productId}")
+    public ResponseEntity<?> getProduct(@PathVariable("productId") long productId){
 
         try{
             Product product = productService.getProduct(productId);
@@ -57,10 +57,10 @@ public class ProductController {
         return ResponseEntity.ok(new ProductsDisplayer(productService.getAllProducts()).toJson());
     }
 
-    @DeleteMapping("/{product_id}")
-    public ResponseEntity<?> deleteProduct(@PathVariable long product_id){
+    @DeleteMapping("/{productId}")
+    public ResponseEntity<?> deleteProduct(@PathVariable long productId){
 
-        return ResponseEntity.ok("Product deleted: " + productService.deleteProduct(product_id).toJson());
+        return ResponseEntity.ok("Product deleted: " + productService.deleteProduct(productId).toJson());
 
     }
 

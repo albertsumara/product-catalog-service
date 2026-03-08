@@ -26,34 +26,56 @@ public class ProductService {
     @Autowired
     private AttributeRepository attributeRepository;
 
-    public Product createProduct (Map<String, String> attributes) {
-        if (!attributes.containsKey("name")) {
-            throw new IllegalArgumentException("the product's attribute set does not contain a mandatory key name.");
+    public void validateMandatoryKey(Map<String, String> attributes, String key, boolean parseDouble) {
+
+        String value = attributes.get(key);
+
+        if (value == null) {
+            throw new IllegalArgumentException("Missing mandatory attribute: " + key);
         }
+
+        if (parseDouble) {
+            try {
+                Double.parseDouble(value);
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException(key + " must be a valid number: " + value);
+            }
+        }
+    }
+
+    public Product createProduct (Map<String, String> attributes) {
+
+        if (attributes == null || attributes.isEmpty()){
+            throw new IllegalArgumentException("Attributes set cannot be empty");
+        }
+
+        validateMandatoryKey(attributes, "name", false);
         String name = attributes.get("name");
         attributes.remove("name");
-        if (!attributes.containsKey("price")) {
-            throw new IllegalArgumentException("the attribute set does not contain a mandatory key price.");
-        }
-        double priceTest;
-        try {
-            priceTest = Double.parseDouble(attributes.get("price"));
-            attributes.remove("price");
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("price parsing error: " + e);
-        }
-        double price = priceTest;
-        Product product = new Product(name, price);
-        Long product_id = productRepository.saveProduct(product);
+
+        validateMandatoryKey(attributes, "price", true);
+        double price = Double.parseDouble(attributes.get("price"));
+        attributes.remove("price");
+
+        validateMandatoryKey(attributes, "producerId", true);
+        long producerId = Long.parseLong(attributes.get("producerId"));
+        attributes.remove("producerId");
+
+
+        Product product = new Product(producerId, name, price);
+
+
+        Long productId = productRepository.saveProduct(product);
+
 
         List<Attribute> attributesOther = new ArrayList<>();
 
         for (Map.Entry<String, String> kvp : attributes.entrySet()){
             Attribute attribute = new Attribute(kvp.getKey(), kvp.getValue());
             attributesOther.add(attribute);
-            attributeRepository.saveAttribute(attribute, product_id);
+            attributeRepository.saveAttribute(attribute, productId);
         }
-        return new Product(product_id, name, price, attributesOther);
+        return new Product(productId, producerId, name, price, attributesOther);
     }
 
     public Product modifyProduct(long productId, Map<String, String> changes) {

@@ -8,24 +8,27 @@ public class Product {
 
     private Long id;
 
+    private Long producerId;
+
     private String name;
 
     private double price;
 
     private List<Attribute> attributes = new ArrayList<>();
 
-    public Product(Long id, String name, double price, List<Attribute> atttributes) {
+    public Product(Long id, Long producerId, String name, double price, List<Attribute> atttributes) {
 
         this.id = id;
+        this.producerId = producerId;
         this.name = name;
         this.price = price;
         this.attributes = atttributes;
 
     }
 
-    public Product(String name, double price) {
+    public Product(Long producerId, String name, double price) {
 
-//        this.id = UUID.randomUUID();
+        this.producerId = producerId;
         this.name = name;
         this.price = price;
     }
@@ -47,6 +50,14 @@ public class Product {
 
     }
 
+    public Long getProducerId() {
+        return producerId;
+    }
+
+    public void setProducerId(Long producerId) {
+        this.producerId = producerId;
+    }
+
     public List<Attribute> getAttributes() {
         return attributes;
     }
@@ -65,7 +76,6 @@ public class Product {
         for (Attribute a : this.attributes) {
             product.put(a.getName(), a.getValue());
         }
-
         return product;
     }
 

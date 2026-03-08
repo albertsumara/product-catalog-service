@@ -1,5 +1,6 @@
 package io.git.albertsumara.pcms.catalogservice.controller;
 import io.git.albertsumara.pcms.catalogservice.model.Producer;
+import io.git.albertsumara.pcms.catalogservice.model.ProducersDisplayer;
 import io.git.albertsumara.pcms.catalogservice.service.ProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,10 +28,20 @@ public class ProducerController {
         }
     }
 
-    @DeleteMapping("/{producer_id}")
-    public ResponseEntity<?> deleteProducer(@PathVariable long producer_id){
+    @GetMapping()
+    public ResponseEntity<?> getAllProducers() {
+        return ResponseEntity.ok(new ProducersDisplayer(producerService.getAllProducers()).toJson());
+    }
 
-        return ResponseEntity.ok("Producer deleted: " + producerService.deleteProducer(producer_id).toJson());
+    @GetMapping("/{producerId}")
+    public ResponseEntity<?> getProducer(@PathVariable long producerId) {
+        return ResponseEntity.ok(new ProducersDisplayer(producerService.getProducer(producerId)).toJson());
+    }
+
+    @DeleteMapping("/{producerId}")
+    public ResponseEntity<?> deleteProducer(@PathVariable long producerId){
+
+        return ResponseEntity.ok("Producer deleted: " + producerService.deleteProducer(producerId).toJson());
 
     }
 

@@ -3,7 +3,7 @@ package io.git.albertsumara.pcms.catalogservice.model;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,20 +15,18 @@ public class ProductsDisplayer {
         this.products = products;
     }
 
-    public String toJson() {
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        long counter = 1;
-
-        Map<Long, Map<String, Object>> products = new LinkedHashMap<>();
-
+    public List<Map<String, Object>> toList() {
+        List<Map<String, Object>> productList = new ArrayList<>();
         for (Product p : this.products) {
-            products.put(counter, p.toMap());
-            counter++;
+            productList.add(p.toMap());
         }
+        return productList;
+    }
 
-        return gson.toJson(products);
-
+    public String toJson() {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.toJson(toList());
     }
 
 }
