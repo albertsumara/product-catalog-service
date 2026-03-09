@@ -64,6 +64,16 @@ Represents a key-value attribute for a product.
   "value": "16GB"
 }
 ```
+### ProductFilter
+Represents a set of filtering criteria for products. This class is used to filter products by name, price range, and custom attributes.
+
+**Fields:**  
+- `name` (String) – optional product name to filter by  
+- `minPrice` (Double) – optional minimum product price  
+- `maxPrice` (Double) – optional maximum product price  
+- `attributes` (Map<String, String>) – optional key-value pairs representing product attributes (e.g., `"RAM": "16GB"`, `"Color": "Silver"`)
+
+
 ### Producers Endpoints (`/api/producer`)  
 - **POST /api/producer**  
   Create a new producer with its name.
@@ -78,6 +88,15 @@ Represents a key-value attribute for a product.
 
 - **GET /api/producer/{producerId}**  
   Retrieve a single producer by its ID with associated products.  
+
+- **GET /api/producer/filter/{producerId}**  
+  Retrieve a single producer with filtered products based on product attributes.
+  ```json
+   {
+    "name": "Laptop X",
+    "min_price": "2000",
+    "Color": "Silver"
+  } 
 
 - **DELETE /api/producer/{producerId}**  
   Delete a producer by ID (cascade deletes related products).  
@@ -104,7 +123,16 @@ Represents a key-value attribute for a product.
   Retrieve all products with their attributes.  
 
 - **GET /api/product/{productId}**  
-  Retrieve a single product by its ID with attributes.  
+  Retrieve a single product by its ID with attributes.
+
+- **GET /api/product/filter**  
+  Retrieve products filtered by attributes.
+  ```json
+   {
+    "name": "Laptop X",
+    "min_price": "2000",
+    "Color": "Silver"
+  }
 
 - **PATCH /api/product/{productId}**  
   Modify attributes or fields of an existing product.
