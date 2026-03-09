@@ -42,7 +42,7 @@ public class ProducerController {
     }
 
     @GetMapping("/filter/{producerId}")
-    public ResponseEntity<?> getFilteredProducer(@RequestBody Map<String, String> filters,
+    public ResponseEntity<?> getFilteredProducer(@RequestParam Map<String, String> filters,
                                                  @PathVariable long producerId){
         ProductFilter filter = new ProductService().productFilter(filters);
         ProducerDisplayer producerDisplayer = new ProducerDisplayer(producerService.getProducer(producerId));

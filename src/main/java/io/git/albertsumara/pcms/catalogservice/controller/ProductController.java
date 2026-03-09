@@ -39,7 +39,7 @@ public class ProductController {
     }
 
     @GetMapping("/filter")
-    public ResponseEntity<?> filterProducts(@RequestBody Map<String, String> filters){
+    public ResponseEntity<?> filterProducts(@RequestParam Map<String, String> filters){
 
         ProductFilter filter = productService.productFilter(filters);
         ProductDisplayer productDisplayer = new ProductDisplayer(productService.getAllProducts());
