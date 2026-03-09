@@ -1,12 +1,10 @@
 package io.git.albertsumara.pcms.catalogservice.controller;
-import io.git.albertsumara.pcms.catalogservice.model.Product;
-import io.git.albertsumara.pcms.catalogservice.model.ProductsDisplayer;
+import io.git.albertsumara.pcms.catalogservice.model.*;
 import io.git.albertsumara.pcms.catalogservice.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 
 import java.util.Map;
 
@@ -40,6 +38,16 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/filter")
+    public ResponseEntity<?> filterProducts(@RequestBody Map<String, String> filters){
+
+        ProductFilter filter = productService.productFilter(filters);
+        ProductDisplayer productDisplayer = new ProductDisplayer(productService.getAllProducts());
+        productDisplayer.setFilter(filter);
+        return ResponseEntity.ok(productDisplayer.toJson());
+
+    }
+
     @GetMapping("/{productId}")
     public ResponseEntity<?> getProduct(@PathVariable("productId") long productId){
 
@@ -54,7 +62,7 @@ public class ProductController {
 
     @GetMapping()
     public ResponseEntity<?> getAllProducts() {
-        return ResponseEntity.ok(new ProductsDisplayer(productService.getAllProducts()).toJson());
+        return ResponseEntity.ok(new ProductDisplayer(productService.getAllProducts()).toJson());
     }
 
     @DeleteMapping("/{productId}")

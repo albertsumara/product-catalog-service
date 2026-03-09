@@ -1,7 +1,10 @@
 package io.git.albertsumara.pcms.catalogservice.controller;
 import io.git.albertsumara.pcms.catalogservice.model.Producer;
-import io.git.albertsumara.pcms.catalogservice.model.ProducersDisplayer;
+import io.git.albertsumara.pcms.catalogservice.model.ProducerDisplayer;
+import io.git.albertsumara.pcms.catalogservice.model.ProductDisplayer;
+import io.git.albertsumara.pcms.catalogservice.model.ProductFilter;
 import io.git.albertsumara.pcms.catalogservice.service.ProducerService;
+import io.git.albertsumara.pcms.catalogservice.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,12 +33,21 @@ public class ProducerController {
 
     @GetMapping()
     public ResponseEntity<?> getAllProducers() {
-        return ResponseEntity.ok(new ProducersDisplayer(producerService.getAllProducers()).toJson());
+        return ResponseEntity.ok(new ProducerDisplayer(producerService.getAllProducers()).toJson());
     }
 
     @GetMapping("/{producerId}")
     public ResponseEntity<?> getProducer(@PathVariable long producerId) {
-        return ResponseEntity.ok(new ProducersDisplayer(producerService.getProducer(producerId)).toJson());
+        return ResponseEntity.ok(new ProducerDisplayer(producerService.getProducer(producerId)).toJson());
+    }
+
+    @GetMapping("/filter/{producerId}")
+    public ResponseEntity<?> getFilteredProducer(@RequestBody Map<String, String> filters,
+                                                 @PathVariable long producerId){
+        ProductFilter filter = new ProductService().productFilter(filters);
+        ProducerDisplayer producerDisplayer = new ProducerDisplayer(producerService.getProducer(producerId));
+        producerDisplayer.setProductFilter(filter);
+        return ResponseEntity.ok(producerDisplayer.toJson());
     }
 
     @DeleteMapping("/{producerId}")

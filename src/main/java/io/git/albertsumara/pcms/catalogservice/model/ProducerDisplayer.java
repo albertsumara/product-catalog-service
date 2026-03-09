@@ -7,12 +7,18 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ProducersDisplayer {
+public class ProducerDisplayer {
 
     private List<Producer> producers;
+    private ProductFilter productFilter;
 
-    public ProducersDisplayer(List<Producer> producers) {
+    public ProducerDisplayer(List<Producer> producers) {
         this.producers = producers;
+        this.productFilter = null;
+    }
+
+    public void setProductFilter(ProductFilter productFilter) {
+        this.productFilter = productFilter;
     }
 
     public String toJson() {
@@ -22,7 +28,9 @@ public class ProducersDisplayer {
         Map<String, List<Map<String, Object>>> producersMap = new LinkedHashMap<>();
 
         for (Producer pr : this.producers) {
-            producersMap.put(pr.getName(), new ProductsDisplayer(pr.getProductList()).toList());
+            ProductDisplayer productDisplayer  = new ProductDisplayer(pr.getProductList());
+            productDisplayer.setFilter(this.productFilter);
+            producersMap.put(pr.getName(), productDisplayer.toList());
         }
 
         return gson.toJson(producersMap);

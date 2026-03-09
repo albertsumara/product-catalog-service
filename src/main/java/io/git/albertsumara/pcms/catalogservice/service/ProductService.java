@@ -3,6 +3,7 @@ package io.git.albertsumara.pcms.catalogservice.service;
 import io.git.albertsumara.pcms.catalogservice.model.Product;
 import io.git.albertsumara.pcms.catalogservice.model.Attribute;
 
+import io.git.albertsumara.pcms.catalogservice.model.ProductFilter;
 import io.git.albertsumara.pcms.catalogservice.repository.AttributeRepository;
 import io.git.albertsumara.pcms.catalogservice.repository.ProductRepository;
 
@@ -11,10 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.logging.Filter;
 
 @Service
 public class ProductService {
@@ -114,6 +113,36 @@ public class ProductService {
                     "Product id: " + productId + " does not exist.");
         }
         return result.get();
+    }
+
+    public ProductFilter productFilter(Map<String, String> filters) {
+        if (filters == null || filters.isEmpty()) {
+            throw new IllegalArgumentException("Filter's map cannot be empty");
+        }
+        ProductFilter filter = new ProductFilter();
+
+        filter.setName(filters.remove("name"));
+
+        String minPriceStr = filters.remove("min_price");
+        if (minPriceStr != null) {
+            try {
+                filter.setMinPrice(Double.parseDouble(minPriceStr));
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("Invalid min_price: " + minPriceStr);
+            }
+        }
+        String maxPriceStr = filters.remove("max_price");
+        if (maxPriceStr != null) {
+            try {
+                filter.setMaxPrice(Double.parseDouble(maxPriceStr));
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("Invalid max_price: " + maxPriceStr);
+            }
+        }
+        if (!filters.isEmpty()) {
+            filter.setAttributes(new HashMap<>(filters));
+        }
+        return filter;
     }
 
 }
