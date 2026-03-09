@@ -45,10 +45,10 @@ public class ProductRepository {
     }
 
     public Optional<Product> findById(long productId) {
-        String sql = "SELECT id, producerId, name, price FROM product WHERE id = ?";
+        String sql = "SELECT id, producer_id, name, price FROM product WHERE id = ?";
         try {
             Product p = jdbcTemplate.queryForObject(sql, new Object[]{productId}, (rs, rowNum) -> {
-                Product product = new Product(rs.getLong("producerId"), rs.getString("name"),
+                Product product = new Product(rs.getLong("producer_id"), rs.getString("name"),
                         rs.getDouble("price"));
                 product.setId(rs.getLong("id"));
                 product.setAttributes(attributeRepository.findByProductId(productId));
